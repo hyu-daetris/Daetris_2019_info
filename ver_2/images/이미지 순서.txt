@@ -1,0 +1,22 @@
+상단
+
+MESSAGE_TOP
+BOX
+COIN
+BOX_BOTTOM
+TABLE
+BACKGROUND
+
+하단
+
+COINS_1~6
+MESSAGE_BOTTOM1/2
+COIN
+BACKGROUND
+
+
+카드를 태그하면 코인이 아래에서 위로 이동하며
+저금통으로 들어가는 방식
+
+COINS_1~6은 계속 돌아가면서 움직이는 걸 보여주고
+긴 시간간격으로 MESSAGE_BOTTOM1/2를 바꿔가며 보여준다.
