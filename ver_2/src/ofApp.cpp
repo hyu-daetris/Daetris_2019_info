@@ -8,7 +8,7 @@ time_t rawtime;
 void ofApp::setup()
 {
 	m_serial.setup();
-	if (m_serial.available()) {
+	if (!m_serial.available()) {
 		std::cout << "[*] error : no serial port available" << std::endl;
 	}
 
