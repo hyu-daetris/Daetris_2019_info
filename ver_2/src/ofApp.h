@@ -10,17 +10,19 @@ class ofApp : public ofBaseApp
 private:
 	SerialApp m_serial;
 
+	time_t m_rawtime;
+
 	void callback(int byte) {
 		coin.onTagged();
 		// Log the check-time in the ~/bin/data/log.txt
-		time(&rawtime);
+		time(&m_rawtime);
 		myTextFile.open("log.txt", ofFile::Append);
-		myTextFile << ctime(&rawtime);
+		myTextFile << ctime(&m_rawtime);
 		myTextFile.close();
 	}
 
 public:
-	ofApp() : m_serial("COM4", 9600) {
+	ofApp(std::string const& port) : m_serial(port, 9600) {
 		m_serial.set_callback([this](int byte){ callback(byte); });
 	}
 
