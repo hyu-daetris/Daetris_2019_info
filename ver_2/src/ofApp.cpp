@@ -4,43 +4,13 @@
 time_t rawtime;
 /// Created by Jeong 2019.03.01
 
-void ofApp::osc208()
-{
-	bang = 0;
-	while ( receiver.hasWaitingMessages() )
-	{
-
-		ofxOscMessage m;
-		receiver.getNextMessage(&m);
-
-		for ( int i = 0; i < m.getNumArgs(); i++ )
-		{
-			if ( m.getArgType(i) == OFXOSC_TYPE_FLOAT )
-			{
-				bang = m.getArgAsFloat(0);
-			}
-		}
-	}
-
-	if ( mbangsw == 1 )
-	{
-		bang = 1;
-	}
-
-	if ( abb == 1 )
-	{
-		abbco += 1;
-		if ( abbco > 200 )
-		{
-			abb = 0; abbco = 0;
-		}
-	}
-
-}
-
 //--------------------------------------------------------------
 void ofApp::setup()
 {
+	m_serial.setup();
+	if (m_serial.available()) {
+		std::cout << "[*] error : no serial port available" << std::endl;
+	}
 
 	background.load("images/BACKGROUND.png");
 	background.rotate90(3);
@@ -79,24 +49,7 @@ void ofApp::setup()
 //--------------------------------------------------------------
 void ofApp::update()
 {
-	osc208();
-
-	if ( bang != 0 && abb == 0 && completeCounter == -1 )
-	{
-		abb = 1;
-		if ( word_writing )return;
-		if ( c_index <= c_endIndex )return;
-		test = true;
-
-		coin.onTagged();
-		// Log the check-time in the ~/bin/data/log.txt
-		time(&rawtime);
-		myTextFile.open("log.txt", ofFile::Append);
-		myTextFile << ctime(&rawtime);
-		myTextFile.close();
-
-
-	}
+	m_serial.update();
 
 	///change background coins------------
 	count--;

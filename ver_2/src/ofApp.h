@@ -3,17 +3,30 @@
 #include "ofMain.h"
 #include "ofxOsc.h"
 #include "Coin.hpp"
+#include "Serial.hpp"
 
 class ofApp : public ofBaseApp
 {
+private:
+	SerialApp m_serial;
+
+	void callback(int byte) {
+		coin.onTagged();
+		// Log the check-time in the ~/bin/data/log.txt
+		time(&rawtime);
+		myTextFile.open("log.txt", ofFile::Append);
+		myTextFile << ctime(&rawtime);
+		myTextFile.close();
+	}
 
 public:
+	ofApp() : m_serial("COM4", 9600) {
+		m_serial.set_callback([this](int byte){ callback(byte); });
+	}
+
 	void setup();
 	void update();
 	void draw();
-
-
-	void osc208();
 
 	ofxOscReceiver receiver;
 
