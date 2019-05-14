@@ -1,7 +1,6 @@
 #include "ofApp.h"
 #include <iostream>
 
-time_t rawtime;
 /// Created by Jeong 2019.03.01
 
 //--------------------------------------------------------------
